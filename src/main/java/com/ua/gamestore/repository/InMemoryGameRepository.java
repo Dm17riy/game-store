@@ -20,6 +20,13 @@ public class InMemoryGameRepository implements GameRepository {
     }
 
     @Override
+    public List<Game> findByGenre(String genre) {
+        return games.values().stream()
+                .filter(game -> genre.equalsIgnoreCase(game.genre()))
+                .toList();
+    }
+
+    @Override
     public Optional<Game> findById(Long id) {
         return Optional.ofNullable(games.get(id));
     }
@@ -35,5 +42,15 @@ public class InMemoryGameRepository implements GameRepository {
         }
         games.put(game.id(), game);
         return game;
+    }
+
+    @Override
+    public Optional<Game> replace(Game game) {
+        return games.replace(game.id(), game) == null ? Optional.empty() : Optional.of(game);
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        return games.remove(id) != null;
     }
 }
