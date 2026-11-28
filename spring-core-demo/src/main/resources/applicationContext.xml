@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="userRepository" class="com.example.repository.InMemoryUserRepository"/>
+    <bean id="productRepository" class="com.example.repository.InMemoryProductRepository"/>
+
+    <bean id="emailNotificationService" class="com.example.service.EmailNotificationService" primary="true"/>
+    <bean id="smsNotificationService" class="com.example.service.SmsNotificationService"/>
+    <bean id="slackNotificationService" class="com.example.service.SlackNotificationService"/>
+
+    <bean id="userService" class="com.example.service.UserService">
+        <constructor-arg ref="userRepository"/>
+        <property name="notificationService" ref="emailNotificationService"/>
+    </bean>
+    <bean id="productService" class="com.example.service.ProductService">
+        <constructor-arg ref="productRepository"/>
+        <constructor-arg ref="slackNotificationService"/>
+    </bean>
+</beans>
