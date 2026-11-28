@@ -1,6 +1,6 @@
 # Перевірка API магазину ігор
 
-У корені проєкту запустіть сервер командою `mvn spring-boot:run` з Java 21.
+У папці `game-store-pz` запустіть сервер командою `.\mvnw.cmd spring-boot:run` з Java 21.
 В IntelliJ IDEA можна запустити клас `GameStoreApplication`.
 
 У другому вікні PowerShell виконайте запити.
@@ -67,4 +67,4 @@ curl.exe -i -X DELETE "$base/$id"
 curl.exe -i -X DELETE "$base/$id"
 ```
 
-У Bash використовуйте `curl` замість `curl.exe`. Ціни наведено в гривнях.
+Ціни наведено в гривнях.

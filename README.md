@@ -1,8 +1,6 @@
-# Практичні заняття
+# Практичні роботи зі Spring
 
-| Папка | Проєкт |
-| --- | --- |
-| [game-store-pz](game-store-pz/) | REST API каталогу ігор на Spring Boot |
-| [spring-core-demo](spring-core-demo/) | ПЗ 1.4 зі Spring Core |
+- [game-store-pz](game-store-pz/) — каталог ігор. ГЗ 1.1 і 1.2, ПЗ 1.3 та тести ГЗ 1.4.
+- [spring-core-demo](spring-core-demo/) — ПЗ 1.4. Конфігурація Spring через XML, Java Config і сканування компонентів.
 
-В IntelliJ IDEA відкрийте `pom.xml` з папки потрібного проєкту.
+Кожна папка має свій `pom.xml`. В IntelliJ IDEA відкривайте його як окремий Maven-проєкт.
