@@ -29,8 +29,9 @@ public class GameController {
     }
 
     @GetMapping
-    public List<GameCardDto> findAll(@RequestParam(name = "genre", required = false) String genre) {
-        return service.findAll(genre);
+    public List<GameCardDto> findAll(@RequestParam(name = "genre", required = false) String genre,
+                                     @RequestParam(name = "platform", required = false) String platform) {
+        return platform == null ? service.findAll(genre) : service.findAll(genre, platform);
     }
 
     @GetMapping("/{id}")

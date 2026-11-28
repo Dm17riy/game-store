@@ -3,25 +3,26 @@ package com.ua.gamestore.repository;
 import com.ua.gamestore.domain.Game;
 import org.springframework.stereotype.Repository;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentNavigableMap;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class InMemoryGameRepository implements GameRepository {
-    private final ConcurrentNavigableMap<Long, Game> games = new ConcurrentSkipListMap<>();
+    private final Map<Long, Game> games = new ConcurrentHashMap<>();
     private final AtomicLong sequence = new AtomicLong();
 
     @Override
     public List<Game> findAll() {
-        return List.copyOf(games.values());
+        return games.values().stream().sorted(Comparator.comparing(Game::id)).toList();
     }
 
     @Override
     public List<Game> findByGenre(String genre) {
-        return games.values().stream()
+        return findAll().stream()
                 .filter(game -> genre.equalsIgnoreCase(game.genre()))
                 .toList();
     }
@@ -36,7 +37,7 @@ public class InMemoryGameRepository implements GameRepository {
         if (game.id() == null) {
             Long id = sequence.incrementAndGet();
             game = new Game(id, game.title(), game.studio(), game.genre(),
-                    game.price(), game.releaseYear(), game.description());
+                    game.price(), game.releaseYear(), game.description(), game.platform());
         } else {
             sequence.accumulateAndGet(game.id(), Math::max);
         }

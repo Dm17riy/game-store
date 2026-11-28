@@ -28,10 +28,19 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameCardDto> findAll(String genre) {
+        return findAll(genre, null);
+    }
+
+    @Override
+    public List<GameCardDto> findAll(String genre, String platform) {
         List<Game> games = (genre == null || genre.isBlank())
                 ? repository.findAll()
                 : repository.findByGenre(genre.strip());
-        return games.stream().map(mapper::toCard).toList();
+        String selectedPlatform = platform == null ? "" : platform.strip();
+        return games.stream()
+                .filter(game -> selectedPlatform.isEmpty() || selectedPlatform.equalsIgnoreCase(game.platform()))
+                .map(mapper::toCard)
+                .toList();
     }
 
     @Override
@@ -42,12 +51,14 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public GameDetailDto create(GameRequest request) {
-        return mapper.toDetail(repository.save(mapper.toDomain(null, request)));
+        return mapper.toDetail(repository.save(mapper.toDomain(request)));
     }
 
     @Override
     public GameDetailDto update(Long id, GameRequest request) {
-        Game game = repository.replace(mapper.toDomain(id, request))
+        Game replacement = mapper.toDomain(request);
+        replacement.setId(id);
+        Game game = repository.replace(replacement)
                 .orElseThrow(() -> new GameNotFoundException(id));
         return mapper.toDetail(game);
     }

@@ -12,5 +12,6 @@ public record GameRequest(
         String genre,
         @NotNull(message = "вкажіть ціну") @Positive(message = "ціна має бути додатною") BigDecimal price,
         int releaseYear,
-        String description) {
+        String description,
+        String platform) {
 }

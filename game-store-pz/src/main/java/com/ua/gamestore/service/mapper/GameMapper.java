@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GameMapper {
-    public Game toDomain(Long id, GameRequest request) {
-        return new Game(id, request.title(), request.studio(), request.genre(),
-                request.price(), request.releaseYear(), request.description());
+    public Game toDomain(GameRequest request) {
+        return new Game(null, request.title(), request.studio(), request.genre(),
+                request.price(), request.releaseYear(), request.description(), request.platform());
     }
 
     public GameCardDto toCard(Game game) {
@@ -19,6 +19,6 @@ public class GameMapper {
 
     public GameDetailDto toDetail(Game game) {
         return new GameDetailDto(game.id(), game.title(), game.studio(), game.genre(),
-                game.price(), game.releaseYear(), game.description());
+                game.price(), game.releaseYear(), game.description(), game.platform());
     }
 }

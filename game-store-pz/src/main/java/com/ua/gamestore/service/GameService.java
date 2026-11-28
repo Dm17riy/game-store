@@ -11,6 +11,8 @@ public interface GameService {
 
     List<GameCardDto> findAll(String genre);
 
+    List<GameCardDto> findAll(String genre, String platform);
+
     GameDetailDto findById(Long id);
 
     GameDetailDto create(GameRequest request);
